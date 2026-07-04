@@ -1,0 +1,38 @@
+name: Scheduled release
+
+# Joins each cohort's manifests/<cohort>.yml (in this .github repo) with its classroom-config
+# classroom-config/schedule.yml and releases everything now due. Idempotent, so a daily run re-releasing
+# past sessions is a no-op. On the cron it releases for real; manual runs default to dry-run.
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Preview only - list what WOULD open, release nothing"
+        type: boolean
+        default: true
+
+jobs:
+  scheduled-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: hertie-data-science-lab/dsl-teaching-course-setup
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Run scheduler
+        env:
+          GH_TOKEN: ${{ secrets.DSL_BOT_TOKEN }}
+          COURSE: ${{ github.repository_owner }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          gh auth setup-git
+          args=(--course-org "$COURSE" --all-cohorts)
+          [ "$DRY_RUN" = "true" ] && args+=(--dry-run)
+          python3 -m dsl_course.scheduler "${args[@]}"
