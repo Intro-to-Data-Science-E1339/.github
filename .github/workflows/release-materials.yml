@@ -16,21 +16,25 @@ on:
         options:
           - Intro-to-Data-Science-f2025
           - Intro-to-Data-Science-f2026
-      cohort_repo:
-        description: "Target repo in the cohort org - every released section nests under its own subfolder there"
-        required: true
-      exclude:
-        description: "Space/comma-separated sections to skip (e.g. readings)"
+      release_labs:
+        description: "Release labs this session?"
+        type: boolean
+        default: true
+      labs_path:
+        description: "Where to put it - leave blank to create/use a repo named 'labs' at its root. Otherwise: first segment = repo name, rest = folder path inside it (e.g. 'materials/labs')."
+        required: false
+      release_lectures:
+        description: "Release lectures this session?"
+        type: boolean
+        default: true
+      lectures_path:
+        description: "Where to put it - leave blank to create/use a repo named 'lectures' at its root. Otherwise: first segment = repo name, rest = folder path inside it (e.g. 'materials/lectures')."
         required: false
       sessions:
         description: "Session(s) to release - comma and/or range list, e.g. 1,3,5-7"
         required: true
-      include_syllabus:
-        description: "Also release the syllabus (root *syllabus* files) - overwrites"
-        type: boolean
-        default: false
-      include_readme:
-        description: "Also release the source README to the cohort root - overwrites"
+      include_root_files:
+        description: "Also release the syllabus + source README (root files) - overwrites"
         type: boolean
         default: false
 
@@ -72,16 +76,17 @@ jobs:
           SRC_REPO: ${{ inputs.source_repo }}
           COHORT_ORG: ${{ inputs.cohort_org }}
           SESSIONS: ${{ inputs.sessions }}
-          INC_SYL: ${{ inputs.include_syllabus }}
-          INC_RM: ${{ inputs.include_readme }}
-          COHORT_REPO: ${{ inputs.cohort_repo }}
-          EXCLUDE_INPUT: ${{ inputs.exclude }}
+          INC_ROOT: ${{ inputs.include_root_files }}
+          RELEASE_LABS: ${{ inputs.release_labs }}
+          PATH_LABS: ${{ inputs.labs_path }}
+          RELEASE_LECTURES: ${{ inputs.release_lectures }}
+          PATH_LECTURES: ${{ inputs.lectures_path }}
         run: |
           gh auth setup-git
           args=(--source-org "$SRC_ORG" --source-repo "$SRC_REPO"
                 --cohort-org "$COHORT_ORG" --sessions "$SESSIONS")
-          [ -n "$COHORT_REPO" ] && args+=(--default-repo "$COHORT_REPO")
-          [ -n "$EXCLUDE_INPUT" ] && args+=(--exclude "$EXCLUDE_INPUT")
-          [ "$INC_SYL" = "true" ] && args+=(--syllabus)
-          [ "$INC_RM" = "true" ] && args+=(--readme)
+          [ "$RELEASE_LABS" = "true" ] && destinations="$destinations labs=${PATH_LABS:-labs}"
+          [ "$RELEASE_LECTURES" = "true" ] && destinations="$destinations lectures=${PATH_LECTURES:-lectures}"
+          [ -n "$destinations" ] && args+=(--destinations "$destinations")
+          [ "$INC_ROOT" = "true" ] && args+=(--syllabus --readme)
           python3 -m dsl_course.release "${args[@]}"
