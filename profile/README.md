@@ -8,7 +8,7 @@ _This page is auto-generated; edits will be overwritten on the next refresh._
 List of cohort orgs registered to receive releases from this course org. _Auto-discovered from the
 `cohort-courses-pages.yml` registry_:
 
-_(none registered yet - run Bootstrap cohort)_
+- [Intro-to-Data-Science-f2025](https://github.com/Intro-to-Data-Science-f2025)
 
 ## Repositories
 
