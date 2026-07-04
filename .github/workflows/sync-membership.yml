@@ -18,6 +18,7 @@ on:
         default: "(faculty only)"
         options:
           - (faculty only)
+          - Intro-to-Data-Science-f2025
 
 jobs:
   check-team:
