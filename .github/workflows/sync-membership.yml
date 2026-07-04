@@ -1,0 +1,87 @@
+name: Sync membership
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - dsl-course.yml
+  repository_dispatch:
+    types: [sync-membership]
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+    inputs:
+      cohort_org:
+        description: "Cohort org"
+        required: true
+        type: choice
+        default: "(faculty only)"
+        options:
+          - (faculty only)
+
+jobs:
+  check-team:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify the user may run actions for THIS repo
+        env:
+          GH_TOKEN: ${{ secrets.DSL_BOT_TOKEN }}
+          ACTOR: ${{ github.actor }}
+          REPO: ${{ github.repository }}
+        run: |
+          # Faculty have write+ on the course repos; students never do (and triggering a
+          # workflow_dispatch already requires write), so repo permission is the gate.
+          perm=$(gh api "repos/$REPO/collaborators/$ACTOR/permission" --jq '.permission' 2>/tmp/gherr || true)
+          case "$perm" in admin|write|maintain) exit 0 ;; esac
+          echo "::error::@$ACTOR lacks write on $REPO (permission='$perm'). gh api said:"
+          cat /tmp/gherr || true
+          exit 1
+
+  sync-dispatch:
+    needs: check-team
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: hertie-data-science-lab/dsl-teaching-course-setup
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Sync membership
+        env:
+          GH_TOKEN: ${{ secrets.DSL_BOT_TOKEN }}
+          COURSE: ${{ github.repository_owner }}
+          COHORT_ORG: ${{ inputs.cohort_org }}
+        run: |
+          args=(--course-org "$COURSE")
+          [ "$COHORT_ORG" != "(faculty only)" ] && args+=(--cohort-org "$COHORT_ORG")
+          python3 -m dsl_course.sync_membership "${args[@]}"
+
+  sync-auto:
+    if: github.event_name != 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: hertie-data-science-lab/dsl-teaching-course-setup
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Sync membership
+        env:
+          GH_TOKEN: ${{ secrets.DSL_BOT_TOKEN }}
+          COURSE: ${{ github.repository_owner }}
+          EVENT: ${{ github.event_name }}
+          DISPATCH_COHORT: ${{ github.event.client_payload.cohort_org }}
+        run: |
+          args=(--course-org "$COURSE")
+          case "$EVENT" in
+            schedule) args+=(--all-cohorts) ;;
+            repository_dispatch) [ -n "$DISPATCH_COHORT" ] && args+=(--cohort-org "$DISPATCH_COHORT") ;;
+          esac
+          python3 -m dsl_course.sync_membership "${args[@]}"
