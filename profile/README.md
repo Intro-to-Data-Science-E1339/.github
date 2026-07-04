@@ -9,6 +9,7 @@ List of cohort orgs registered to receive releases from this course org. _Auto-d
 `cohort-courses-pages.yml` registry_:
 
 - [Intro-to-Data-Science-f2025](https://github.com/Intro-to-Data-Science-f2025)
+- [Intro-to-Data-Science-f2026](https://github.com/Intro-to-Data-Science-f2026)
 
 ## Repositories
 
