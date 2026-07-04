@@ -1,0 +1,21 @@
+org: Intro-to-Data-Science-E1339
+org_name: Intro to Data Science
+course_name: Intro to Data Science
+course_code: GRAD-E1339
+
+# This is the persistent COURSE org - it spans many cohorts (years). Cohorts are
+# registered separately in .github/cohort-courses-pages.yml. The schedule changes
+# year to year, so it's declared PER COHORT in that cohort's own
+# classroom-config/schedule.yml, not here.
+
+# Course admins for this course - the single source of truth for admin access
+# (applied here AND mirrored into every cohort org). Uncomment:
+#
+# people:
+#   course_admins:
+#     - github_handle: "adminhandle"    # required - grants the `course-admin` team
+#       start: "2026-09-01"             # optional - no start = active immediately
+#       end: "2027-06-30"               # optional - no end = indefinite
+#
+# Instructors/TAs are declared per cohort instead (most cohorts have different
+# lecturers/TAs) - see that cohort's classroom-config/people.yml.
