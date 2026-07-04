@@ -19,6 +19,7 @@ on:
         options:
           - (faculty only)
           - Intro-to-Data-Science-f2025
+          - Intro-to-Data-Science-f2026
 
 jobs:
   check-team:
