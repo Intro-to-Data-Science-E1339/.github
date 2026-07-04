@@ -14,6 +14,7 @@ on:
         type: choice
         options:
           - Intro-to-Data-Science-f2025
+          - Intro-to-Data-Science-f2026
       dry_run:
         description: "Preview the codes + emails - write nothing, send nothing"
         type: boolean
