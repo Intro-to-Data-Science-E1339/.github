@@ -13,6 +13,7 @@ on:
         type: choice
         options:
           - Intro-to-Data-Science-f2025
+          - Intro-to-Data-Science-f2026
       assignment:
         description: "Assignment template repo (e.g. assignment-1-f2026)"
         required: true
