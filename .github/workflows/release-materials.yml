@@ -14,7 +14,7 @@ on:
         required: true
         type: choice
         options:
-          - (none-yet)
+          - Intro-to-Data-Science-f2025
       cohort_repo:
         description: "Target repo in the cohort org"
         required: true
