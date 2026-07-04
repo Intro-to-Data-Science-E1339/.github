@@ -12,7 +12,7 @@ on:
         required: true
         type: choice
         options:
-          - (none-yet)
+          - Intro-to-Data-Science-f2025
 
 jobs:
   check-team:
