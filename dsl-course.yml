@@ -14,5 +14,23 @@ people:
   course_admins:
     - github_handle: "henrycgbaker"    # required - grants the `course-admin` team
 
-# Instructors/TAs are declared per cohort instead (most cohorts have different
-# lecturers/TAs) - see that cohort's classroom-config/people.yml.
+  # instructors/teaching_assistants here are for the website's instructor/TA cards
+  # only (name/photo/url) - they grant no GitHub access. Real per-cohort access is
+  # declared in that cohort's own classroom-config/people.yml instead.
+  instructors:
+    - github_handle: "simonmunzert"
+      name: "Prof. Dr. Simon Munzert"
+      title: "Professor of Data Science and Public Policy | Director, Data Science Lab"
+      photo: "https://www.hertie-school.org/fileadmin/_processed_/8/3/csm_Munzert_800px_928934b780.jpg"
+      url: "https://www.hertie-school.org/en/research/faculty-and-researchers/profile/person/munzert"
+  teaching_assistants:
+    - github_handle: "cbsobral"
+      name: "Carol Sobral"
+      title: "PhD Candidate, Doctoral Programme in Governance"
+      photo: "https://www.hertie-school.org/fileadmin/_processed_/1/c/csm_carol_Carol_Sobral_44cb1bcfa2.jpg"
+      url: "https://www.hertie-school.org/en/who-we-are/profile/person/sobral"
+    - github_handle: "Killian-Conyngham"
+      name: "Killian Conyngham"
+      title: "Teaching Assistant"
+      photo: "https://avatars.githubusercontent.com/u/19914082?v=4"
+      url: "https://github.com/Killian-Conyngham"
