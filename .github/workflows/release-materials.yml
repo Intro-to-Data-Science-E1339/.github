@@ -8,6 +8,7 @@ on:
         required: true
         type: choice
         options:
+          - intro-to-data-science-e1339.github.io
           - course-materials-f2025
       cohort_org:
         description: "Target cohort org"
