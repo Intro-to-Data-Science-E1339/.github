@@ -1,6 +1,14 @@
 name: Sync site
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - dsl-course.yml
+  repository_dispatch:
+    types: [sync-site]
+  schedule:
+    - cron: "0 6 * * *"
   workflow_dispatch:
     inputs:
       cohort_org:
@@ -48,3 +56,35 @@ jobs:
         run: |
           gh auth setup-git
           python3 -m dsl_course.site sync --course-org "${{ github.repository_owner }}" --cohort-org "${{ inputs.cohort_org }}"
+
+  sync-auto:
+    if: github.event_name != 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: hertie-data-science-lab/dsl-teaching-course-setup
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Sync site
+        env:
+          GH_TOKEN: ${{ secrets.DSL_BOT_TOKEN }}
+          COURSE: ${{ github.repository_owner }}
+          EVENT: ${{ github.event_name }}
+          DISPATCH_COHORT: ${{ github.event.client_payload.cohort_org }}
+        run: |
+          gh auth setup-git
+          args=(--course-org "$COURSE")
+          case "$EVENT" in
+            push|schedule) args+=(--all-cohorts) ;;
+            repository_dispatch)
+              if [ -n "$DISPATCH_COHORT" ]; then
+                args+=(--cohort-org "$DISPATCH_COHORT")
+              else
+                args+=(--all-cohorts)
+              fi ;;
+          esac
+          python3 -m dsl_course.site sync "${args[@]}"
