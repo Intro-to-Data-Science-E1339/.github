@@ -1,6 +1,16 @@
 # Intro to Data Science
 
-**Intro to Data Science** - managed by the Hertie Data Science Lab.
+**Intro to Data Science** - the persistent **course org** for this course, managed by the Hertie Data
+Science Lab. It is the control panel: version-controlled materials + assignment templates, plus
+every faculty action button. Each year's students live in a separate **cohort org** that
+receives releases from here.
+
+> **Faculty - start here:** run everything from the
+> **[`.github` Actions tab](https://github.com/Intro-to-Data-Science-E1339/.github/actions)**. New to the platform?
+> Follow the step-by-step
+> **[workflow runbooks](https://github.com/hertie-data-science-lab/dsl-teaching-course-setup/blob/main/docs/faculty-and-instructors/README.md)**.
+> The sections below are a live index of this org's cohorts, repositories, and actions.
+
 _This page is auto-generated; edits will be overwritten on the next refresh._
 
 ## Cohorts
@@ -34,7 +44,7 @@ _(automatically bootstrapped from the central
 - [**New materials repo**](https://github.com/Intro-to-Data-Science-E1339/.github/actions/workflows/new-materials.yml) - scaffold a correctly-structured `course-materials-<year>` repo (session folders + the Release buttons).
 - [**New assignment**](https://github.com/Intro-to-Data-Science-E1339/.github/actions/workflows/new-assignment.yml) - scaffold an `assignment-N-<year>` template repo (starter on `main`; the `solution` branch carries the model solution, `grading.yml`, and the hidden tests).
 - [**Refresh actions**](https://github.com/Intro-to-Data-Science-E1339/.github/actions/workflows/refresh-actions.yml) - repopulate the cohort/session/assignment dropdowns, re-equip content repos, and rebuild this index.
-- [**Show status**](https://github.com/Intro-to-Data-Science-E1339/.github/actions/workflows/status.yml) - a per-cohort checklist of everything configured (identity, people, manifest, schedule, roster, teams, grades, session calendar) with direct edit links for anything missing. Read-only.
+- [**Show status**](https://github.com/Intro-to-Data-Science-E1339/.github/actions/workflows/status.yml) - a per-cohort checklist of everything configured (identity, people, schedule + release plan, roster, teams, grades) with direct edit links for anything missing. Read-only.
 
 ### Optional: public course website (open courseware)
 - [**Publish course website**](https://github.com/Intro-to-Data-Science-E1339/.github/actions/workflows/publish-site.yml) - build/refresh a PUBLIC site `Intro-to-Data-Science-E1339.github.io` that shares this course's lecture materials and readings with the world. Opt-in + manual (the first run scaffolds the site). Pick a materials repo and choose for readings: `reading-list` (citations only) or `actual-readings` (also host the files). Because the materials repos are private, the site **hosts** the shared files itself. This is separate from each cohort's student-facing site.
@@ -55,7 +65,7 @@ own include checkbox).
 - [**Render grades (preview)**](https://github.com/Intro-to-Data-Science-E1339/.github/actions/workflows/render-grades.yml) - build per-student `gradebook/<handle>.yml` from `classroom-config/grades/<assignment>.csv` and open ONE pull request. **That PR is the preview** - review every student's grades in the diff before sending.
 - [**Distribute grades**](https://github.com/Intro-to-Data-Science-E1339/.github/actions/workflows/distribute-grades.yml) - after merging the preview PR, copy each student's gradebook into their private repo and (unless silenced) email each student a notification to their university inbox (needs the `GRAPH_*` or `SMTP_*` secrets).
 
-- [**Scheduled release**](https://github.com/Intro-to-Data-Science-E1339/.github/actions/workflows/scheduled-release.yml) - daily cron that auto-releases whatever each cohort's `manifests/<cohort>.yml` (in `.github`) and its `classroom-config/schedule.yml` say is due. Manual runs default to a dry-run preview ("what opens when"). Manual buttons above still work for early/ad-hoc release.
+- [**Scheduled release**](https://github.com/Intro-to-Data-Science-E1339/.github/actions/workflows/scheduled-release.yml) - hourly cron that auto-releases whatever each cohort's `classroom-config/schedule.yml` `materials_releases:` plan says is now due (honouring each release's `when` time to the hour). Manual runs default to a dry-run preview ("what opens when"). Manual buttons above still work for early/ad-hoc release.
 
 - _[**Sync site**](https://github.com/Intro-to-Data-Science-E1339/.github/actions/workflows/sync-site.yml) - regenerate a cohort's website from the org structure (releases do this automatically; standard workflow has no need for manual sync)._
 
