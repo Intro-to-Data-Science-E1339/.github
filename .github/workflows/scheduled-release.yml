@@ -1,12 +1,13 @@
 name: Scheduled release
 
-# Joins each cohort's manifests/<cohort>.yml (in this .github repo) with its classroom-config
-# classroom-config/schedule.yml and releases everything now due. Idempotent, so a daily run re-releasing
-# past sessions is a no-op. On the cron it releases for real; manual runs default to dry-run.
+# Reads each cohort's classroom-config/schedule.yml `materials_releases:` plan and fires
+# every release whose `when` datetime has arrived. Idempotent, so re-releasing on the next
+# hour is a no-op. On the cron it releases for real; manual runs default to dry-run.
+# Hourly so a `when` time-of-day is honoured to the hour (GitHub cron is UTC and best-effort).
 
 on:
   schedule:
-    - cron: "0 6 * * *"
+    - cron: "0 * * * *"
   workflow_dispatch:
     inputs:
       dry_run:
