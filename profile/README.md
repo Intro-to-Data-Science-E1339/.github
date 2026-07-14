@@ -30,6 +30,7 @@ cohort org using the GitHub Actions below_.
 | Repo | Visibility | Description |
 | --- | --- | --- |
 | [course-materials-f2025](https://github.com/Intro-to-Data-Science-E1339/course-materials-f2025) | private | Course materials (lectures/readings by session) |
+| [intro-to-data-science-e1339.github.io](https://github.com/Intro-to-Data-Science-E1339/intro-to-data-science-e1339.github.io) | public | Course website (auto-deployed on push) |
 
 ## Available actions for faculty & admin
 
