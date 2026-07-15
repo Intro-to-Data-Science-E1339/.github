@@ -1,6 +1,6 @@
 # Intro to Data Science - course control panel
 
-This is the **`.github` repo** for the `Intro-to-Data-Science-E1339` course org - the control panel faculty use to run
+This is the **`.github` repo** for the `Intro-to-Data-Science-E1339` course org - the control panel faculty & instructors use to run
 the course. **You never need a CLI or to write code: every action is a clickable UI button.**
 
 ## Run an action
