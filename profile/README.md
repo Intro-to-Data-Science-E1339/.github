@@ -2,10 +2,10 @@
 
 **Intro to Data Science** - the persistent **course org** for this course, managed by the Hertie Data
 Science Lab. It is the control panel: version-controlled materials + assignment templates, plus
-every faculty action button. Each year's students live in a separate **cohort org** that
+every faculty & instructors action button. Each year's students live in a separate **cohort org** that
 receives releases from here.
 
-> **Faculty - start here:** run everything from the
+> **Faculty & instructors - start here:** run everything from the
 > **[`.github` Actions tab](https://github.com/Intro-to-Data-Science-E1339/.github/actions)**. New to the platform?
 > Follow the step-by-step
 > **[workflow runbooks](https://github.com/hertie-data-science-lab/dsl-teaching-course-setup/blob/main/docs/faculty-and-instructors/README.md)**.
@@ -33,7 +33,7 @@ cohort org using the GitHub Actions below_.
 | [course-materials-f2026](https://github.com/Intro-to-Data-Science-E1339/course-materials-f2026) | private | Course materials (lectures/readings by session) |
 | [intro-to-data-science-e1339.github.io](https://github.com/Intro-to-Data-Science-E1339/intro-to-data-science-e1339.github.io) | public | Course website (auto-deployed on push) |
 
-## Available actions for faculty & admin
+## Available actions for faculty, instructors & admin
 
 All actions live in the [`.github` repo's Actions tab](https://github.com/Intro-to-Data-Science-E1339/.github/actions)
 _(automatically bootstrapped from the central
@@ -62,7 +62,7 @@ repo; there the `session` is a dropdown of that repo's sessions, and each discov
 own include checkbox).
 
 ### Grades (private, previewable):
-- [**Grade assignment**](https://github.com/Intro-to-Data-Science-E1339/.github/actions/workflows/grade-assignment.yml) - faculty-side autograder: after the deadline, run the HIDDEN tests (from the template's `solution` branch) against each submission and record the machine score into `classroom-config/grades/<assignment>.csv`. Nothing is written to student repos; faculty then add manual marks. Optional per assignment (skipped if `grading.yml` sets `autograde: false`).
+- [**Grade assignment**](https://github.com/Intro-to-Data-Science-E1339/.github/actions/workflows/grade-assignment.yml) - faculty-side autograder: after the deadline, run the HIDDEN tests (from the template's `solution` branch) against each submission and record the machine score into `classroom-config/grades/<assignment>.csv`. Nothing is written to student repos; faculty & instructors then add manual marks. Optional per assignment (skipped if `grading.yml` sets `autograde: false`).
 - [**Sync gradebooks**](https://github.com/Intro-to-Data-Science-E1339/.github/actions/workflows/sync-gradebooks.yml) - ensure every onboarded student has a PRIVATE `grades-<handle>` repo (the single home for all their grades). Idempotent.
 - [**Render grades (preview)**](https://github.com/Intro-to-Data-Science-E1339/.github/actions/workflows/render-grades.yml) - build per-student `gradebook/<handle>.yml` from `classroom-config/grades/<assignment>.csv` and open ONE pull request. **That PR is the preview** - review every student's grades in the diff before sending.
 - [**Distribute grades**](https://github.com/Intro-to-Data-Science-E1339/.github/actions/workflows/distribute-grades.yml) - after merging the preview PR, copy each student's gradebook into their private repo and (unless silenced) email each student a notification to their university inbox (needs the `GRAPH_*` or `SMTP_*` secrets).
@@ -103,8 +103,8 @@ public site only exists, and only updates, when you run the action.
 
 ```
 Intro-to-Data-Science-E1339/                            <- this COURSE org (persistent)
-|-- .github/                      profile + faculty action buttons + cohort registry
-|-- course-materials-<year>/      lectures/00_.../   readings/00_.../   (+ syllabus, README)
+|-- .github/                      profile + faculty & instructors action buttons + cohort registry
+|-- course-materials-<year>/      lectures/01_.../   readings/01_.../   (+ syllabus, README)
 `-- assignment-<n>-<year>/        is_template repo:
                                     main      -> starter + autograder   (students get this)
                                     solution  -> solution/   (pushed to students on demand)
@@ -124,11 +124,11 @@ repo (via its **Bootstrap Course Org** action), and the actions above run that s
 The course-level actions assume this layout - use **New materials repo** / **New assignment** above to scaffold correctly.
 
 **Materials repo** (`course-materials-<year>`) - the source for Release materials. Any
-top-level directory containing at least one ordinal-prefixed (`00_`, `01_`, ...)
+top-level directory containing at least one ordinal-prefixed (`01_`, `02_`, `03_`, ...)
 subdirectory is a releasable section - no config to declare it:
-- `lectures/00_.../` - one folder per session's lecture files;
-- `readings/00_.../` - one folder per session's readings;
-- add more sections freely (e.g. `labs/00_.../`) - **Refresh actions** picks up new ones;
+- `lectures/01_.../` - one folder per session's lecture files;
+- `readings/01_.../` - one folder per session's readings;
+- add more sections freely (e.g. `labs/01_.../`) - **Refresh actions** picks up new ones;
 - `*syllabus*`, `README.md` at the **root** (optional) - released via the syllabus / README toggles.
 
 **Assignment repo** (`assignment-N-<year>`, an `is_template` repo) - the source for Release assignment:
