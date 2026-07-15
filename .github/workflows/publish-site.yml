@@ -15,6 +15,7 @@ on:
         type: choice
         options:
           - intro-to-data-science-e1339.github.io
+          - course-materials-f2026
           - course-materials-f2025
       readings_mode:
         description: "Readings: reading-list (citations) / actual-readings (files) / none"
