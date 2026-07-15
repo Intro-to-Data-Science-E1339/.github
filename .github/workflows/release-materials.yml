@@ -9,6 +9,7 @@ on:
         type: choice
         options:
           - intro-to-data-science-e1339.github.io
+          - course-materials-f2026
           - course-materials-f2025
       cohort_org:
         description: "Target cohort org"
@@ -30,6 +31,13 @@ on:
         default: true
       lectures_path:
         description: "Where to put it - leave blank to create/use a repo named 'lectures' at its root. Otherwise: first segment = repo name, rest = folder path inside it (e.g. 'materials/lectures')."
+        required: false
+      release_readings:
+        description: "Release readings this session?"
+        type: boolean
+        default: true
+      readings_path:
+        description: "Where to put it - leave blank to create/use a repo named 'readings' at its root. Otherwise: first segment = repo name, rest = folder path inside it (e.g. 'materials/readings')."
         required: false
       sessions:
         description: "Session(s) to release - comma and/or range list, e.g. 1,3,5-7"
@@ -82,12 +90,15 @@ jobs:
           PATH_LABS: ${{ inputs.labs_path }}
           RELEASE_LECTURES: ${{ inputs.release_lectures }}
           PATH_LECTURES: ${{ inputs.lectures_path }}
+          RELEASE_READINGS: ${{ inputs.release_readings }}
+          PATH_READINGS: ${{ inputs.readings_path }}
         run: |
           gh auth setup-git
           args=(--source-org "$SRC_ORG" --source-repo "$SRC_REPO"
                 --cohort-org "$COHORT_ORG" --sessions "$SESSIONS")
           [ "$RELEASE_LABS" = "true" ] && destinations="$destinations labs=${PATH_LABS:-labs}"
           [ "$RELEASE_LECTURES" = "true" ] && destinations="$destinations lectures=${PATH_LECTURES:-lectures}"
+          [ "$RELEASE_READINGS" = "true" ] && destinations="$destinations readings=${PATH_READINGS:-readings}"
           [ -n "$destinations" ] && args+=(--destinations "$destinations")
           [ "$INC_ROOT" = "true" ] && args+=(--syllabus --readme)
           python3 -m dsl_course.release "${args[@]}"
