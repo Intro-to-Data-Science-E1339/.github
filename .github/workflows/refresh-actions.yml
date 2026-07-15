@@ -14,7 +14,7 @@ jobs:
           ACTOR: ${{ github.actor }}
           REPO: ${{ github.repository }}
         run: |
-          # Faculty have write+ on the course repos; students never do (and triggering a
+          # Faculty & instructors have write+ on the course repos; students never do (and triggering a
           # workflow_dispatch already requires write), so repo permission is the gate.
           perm=$(gh api "repos/$REPO/collaborators/$ACTOR/permission" --jq '.permission' 2>/tmp/gherr || true)
           case "$perm" in admin|write|maintain) exit 0 ;; esac
