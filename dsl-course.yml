@@ -4,33 +4,38 @@ course_name: Intro to Data Science
 course_code: GRAD-E1339
 
 # This is the persistent COURSE org - it spans many cohorts (years). Cohorts are
-# registered separately in .github/cohort-courses-pages.yml. The schedule changes
-# year to year, so it's declared PER COHORT in that cohort's own
-# classroom-config/schedule.yml, not here.
+# registered separately in .github/cohort-courses-pages.yml.
 
-# Course admins for this course - the single source of truth for admin access
-# (applied here AND mirrored into every cohort org).
+# ---------------------------------------------------------------------------
+# People. Two DIFFERENT things live under the `people:` key below - don't
+# confuse them:
+#
+#   course_admins        GRANTS ACCESS. The single source of truth for course-wide
+#                        admin rights - the `course-admin` team here, mirrored into
+#                        every cohort org. "Sync membership" reconciles that team
+#                        FROM this list: a handle added any other way (Teams UI, a
+#                        gh call) is reverted on the next sync unless it's declared
+#                        here, and removing a handle here revokes their access.
+#
+#   instructors          DISPLAY ONLY - website cards (name/photo/title/link) for
+#                        the OPTIONAL public open-courseware course website (the
+#                        "Publish course website" action). They grant NO GitHub
+#                        access. TAs are NOT declared here - they change every
+#                        cohort, so a cohort's whole teaching team (instructors &
+#                        TAs, their GitHub access AND their cohort-site cards) is
+#                        declared PER COHORT in that cohort's classroom-config/people.yml.
+# ---------------------------------------------------------------------------
 people:
   course_admins:
     - github_handle: "henrycgbaker"    # required - grants the `course-admin` team
 
-  # instructors/teaching_assistants here are for the website's instructor/TA cards
-  # only (name/photo/url) - they grant no GitHub access. Real per-cohort access is
-  # declared in that cohort's own classroom-config/people.yml instead.
+  # Instructor website cards (optional, DISPLAY ONLY - no GitHub access) for the
+  # OPTIONAL public open-courseware course website. TAs are NOT listed here - a
+  # cohort's own teaching team (instructors & TAs) goes in that cohort's
+  # classroom-config/people.yml instead.
   instructors:
     - github_handle: "simonmunzert"
       name: "Prof. Dr. Simon Munzert"
       title: "Professor of Data Science and Public Policy | Director, Data Science Lab"
       photo: "https://www.hertie-school.org/fileadmin/_processed_/8/3/csm_Munzert_800px_928934b780.jpg"
       url: "https://www.hertie-school.org/en/research/faculty-and-researchers/profile/person/munzert"
-  teaching_assistants:
-    - github_handle: "cbsobral"
-      name: "Carol Sobral"
-      title: "PhD Candidate, Doctoral Programme in Governance"
-      photo: "https://www.hertie-school.org/fileadmin/_processed_/1/c/csm_carol_Carol_Sobral_44cb1bcfa2.jpg"
-      url: "https://www.hertie-school.org/en/who-we-are/profile/person/sobral"
-    - github_handle: "Killian-Conyngham"
-      name: "Killian Conyngham"
-      title: "Teaching Assistant"
-      photo: "https://avatars.githubusercontent.com/u/19914082?v=4"
-      url: "https://github.com/Killian-Conyngham"
